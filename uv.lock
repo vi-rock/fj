@@ -204,6 +204,7 @@ version = "0.1.0"
 source = { editable = "packages/db" }
 dependencies = [
     { name = "asyncpg" },
+    { name = "config" },
     { name = "sqlalchemy", extra = ["asyncio"] },
 ]
 
@@ -217,6 +218,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "asyncpg", specifier = ">=0.31.0" },
+    { name = "config", editable = "packages/config" },
     { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.0.51" },
 ]
 

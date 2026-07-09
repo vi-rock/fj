@@ -1,2 +1,3 @@
-def hello() -> str:
-    return "Hello from config!"
+from .settings import DatabaseConfig, Settings, settings
+
+__all__ = ["DatabaseConfig", "Settings", "settings"]

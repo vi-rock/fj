@@ -4,6 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
     "asyncpg>=0.31.0",
+    "config",
     "sqlalchemy[asyncio]>=2.0.51",
 ]
 
@@ -17,3 +18,6 @@ dev = [
     "pytest-asyncio>=1.4.0",
     "pytest-cov>=7.1.0",
 ]
+
+[tool.uv.sources]
+config = { workspace = true }
