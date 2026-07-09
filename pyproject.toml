@@ -50,3 +50,16 @@ include = [
 pythonVersion = "3.14"
 
 typeCheckingMode = "strict"
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = [
+    "services",
+    "packages",
+]
+
+markers = [
+    "unit: fast isolated tests",
+    "integration: tests requiring external services",
+]
