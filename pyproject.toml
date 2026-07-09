@@ -19,7 +19,7 @@ observability = { workspace = true }
 dev = [
     "ruff",
     "pyright",
-    "pre-commit",
+    "prek",
 ]
 
 [tool.ruff]
