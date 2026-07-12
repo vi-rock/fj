@@ -4,18 +4,16 @@ from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 
-def build_database_url() -> str:
+def build_database_url() -> URL:
     database_settings = settings.database
 
-    return str(
-        URL.create(
-            "postgresql+asyncpg",
-            username=database_settings.user,
-            password=database_settings.password,
-            host=database_settings.host,
-            port=database_settings.port,
-            database=database_settings.database,
-        )
+    return URL.create(
+        drivername="postgresql+asyncpg",
+        username=database_settings.user,
+        password=database_settings.password,
+        host=database_settings.host,
+        port=database_settings.port,
+        database=database_settings.database,
     )
 
 
