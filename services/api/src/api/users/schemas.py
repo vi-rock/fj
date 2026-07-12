@@ -2,11 +2,9 @@ from pydantic import BaseModel, Field
 
 
 class UserRequest(BaseModel):
-    id: int = Field(..., ge=1, description="Identifier used to get a cached random user")
+    nickname: str = Field(..., min_length=1, max_length=32)
 
 
 class UserResponse(BaseModel):
-    id: int
-    name: str
-    email: str
-    age: int
+    nickname: str
+    exists: bool

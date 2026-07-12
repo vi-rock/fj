@@ -19,20 +19,13 @@ def build_database_url() -> str:
     )
 
 
-def create_async_engine_from_env(
-    *,
-    echo: bool = False,
-    pool_pre_ping: bool = True,
-    **engine_kwargs: object,
-) -> AsyncEngine:
-    return create_async_engine(
-        build_database_url(),
-        echo=echo,
-        pool_pre_ping=pool_pre_ping,
-        **engine_kwargs,
-    )
-
-
 async def ping_database(engine: AsyncEngine) -> None:
     async with engine.connect() as connection:
         await connection.execute(text("SELECT 1"))
+
+
+engine: AsyncEngine = create_async_engine(
+    build_database_url(),
+    echo=False,
+    pool_pre_ping=True,
+)

@@ -21,10 +21,7 @@ repos:
         args: [ --fix ]
       - id: ruff-format
 
-  - repo: local
+  - repo: https://github.com/astral-sh/ty-pre-commit
+    rev: v0.0.58
     hooks:
-      - id: pyright
-        name: pyright
-        entry: uv run pyright
-        language: system
-        pass_filenames: false
+      - id: ty

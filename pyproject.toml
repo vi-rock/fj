@@ -18,8 +18,8 @@ observability = { workspace = true }
 [dependency-groups]
 dev = [
     "ruff",
-    "pyright",
     "prek",
+    "ty>=0.0.58",
 ]
 
 [tool.ruff]
@@ -40,28 +40,6 @@ select = [
 
 [tool.ruff.format]
 quote-style = "double"
-
-[tool.pyright]
-include = [
-    "services",
-    "packages",
-]
-
-executionEnvironments = [
-    { root = ".", extraPaths = [
-        "services/api/src",
-        "services/worker/src",
-        "services/scheduler/src",
-        "packages/config/src",
-        "packages/core/src",
-        "packages/db/src",
-        "packages/observability/src",
-    ]},
-]
-
-pythonVersion = "3.14"
-
-typeCheckingMode = "strict"
 
 
 [tool.pytest.ini_options]
