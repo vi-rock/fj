@@ -3,7 +3,7 @@ from random import choice, randint
 
 from fastapi import FastAPI
 
-from .shemas.user import UserRequest, UserResponse
+from api.users.schemas import UserRequest, UserResponse
 
 app = FastAPI(title="FJ API")
 

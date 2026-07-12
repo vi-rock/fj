@@ -47,6 +47,18 @@ include = [
     "packages",
 ]
 
+executionEnvironments = [
+    { root = ".", extraPaths = [
+        "services/api/src",
+        "services/worker/src",
+        "services/scheduler/src",
+        "packages/config/src",
+        "packages/core/src",
+        "packages/db/src",
+        "packages/observability/src",
+    ]},
+]
+
 pythonVersion = "3.14"
 
 typeCheckingMode = "strict"

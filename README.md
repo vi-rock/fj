@@ -41,7 +41,7 @@ uv run --package api uvicorn api.main:app
 
 Optional checks:
 ```bash
-uv run ruff check .
+uv run ruff check
 uv run pyright
 ```
 
