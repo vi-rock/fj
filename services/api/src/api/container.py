@@ -1,4 +1,4 @@
-from db.di import DBProvider
+from db.provider import DBProvider
 from dishka import make_async_container
 from dishka.integrations.fastapi import FastapiProvider
 
