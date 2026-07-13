@@ -2,6 +2,17 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class AuthConfig(BaseModel):
+    private_key: str = Field(default="fj", validation_alias="PRIVATE_KEY")
+    public_key: str = Field(default="fj", validation_alias="PUBLIC_KEY")
+    access_token_expire_minutes: int = Field(
+        default=30, validation_alias="ACCESS_TOKEN_EXPIRE_MINUTES"
+    )
+    invite_enabled: bool = Field(default=True, validation_alias="INVITE_ENABLED")
+    registration_enabled: bool = Field(default=False, validation_alias="REGISTRATION_ENABLED")
+    oauth2_enabled: bool = Field(default=False, validation_alias="OAUTH2_ENABLED")
+
+
 class DatabaseConfig(BaseModel):
     user: str = Field(default="fj", validation_alias="POSTGRES_USER")
     password: str = Field(default="fj", validation_alias="POSTGRES_PASSWORD")
@@ -18,7 +29,8 @@ class Settings(BaseSettings):
     )
 
     environment: str = "local"
-    database: DatabaseConfig = DatabaseConfig()
+    database = DatabaseConfig()
+    auth = AuthConfig()
 
 
 settings = Settings()
