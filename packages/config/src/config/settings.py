@@ -29,8 +29,8 @@ class Settings(BaseSettings):
     )
 
     environment: str = "local"
-    database = DatabaseConfig()
-    auth = AuthConfig()
+    database: DatabaseConfig = DatabaseConfig()
+    auth: AuthConfig = AuthConfig()
 
 
 settings = Settings()
