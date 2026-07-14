@@ -3,7 +3,7 @@ from logging.config import fileConfig
 
 from alembic import context
 from config import settings
-from db.models.base import Base
+from db.base.model import BaseORM
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
@@ -33,7 +33,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 
 
-target_metadata = Base.metadata
+target_metadata = BaseORM.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

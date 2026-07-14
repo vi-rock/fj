@@ -1,12 +1,12 @@
 from types import TracebackType
-from typing import Protocol, Self, runtime_checkable
+from typing import Protocol, Self
 
+from domain.users.repository import UserRepositoryProtocol
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.repositories.user import UserRepository, UserRepositoryProtocol
+from db.users.repository import UserRepository
 
 
-@runtime_checkable
 class RepositoriesProtocol(Protocol):
     @property
     def users(self) -> UserRepositoryProtocol: ...
@@ -14,12 +14,18 @@ class RepositoriesProtocol(Protocol):
 
 class SqlAlchemyRepositories:
     def __init__(self, session: AsyncSession):
-        self.users = UserRepository(session)
+        self.__session: AsyncSession = session
+        self.__users: UserRepository | None = None
+
+    @property
+    def users(self):
+        if self.__users is None:
+            self.__users = UserRepository(self.__session)
+
+        return self.__users
 
 
-@runtime_checkable
 class UnitOfWorkProtocol(Protocol):
-    session: AsyncSession
     repositories: RepositoriesProtocol
 
     async def __aenter__(self) -> Self: ...
