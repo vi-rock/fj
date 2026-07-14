@@ -4,10 +4,13 @@ members = [
     "packages/db",
     "packages/config",
     "packages/observability",
+    "packages/application",
+    "packages/domain",
     "services/api",
     "services/worker",
     "services/scheduler",
     "packages/application",
+    "packages/domain",
 ]
 
 [tool.uv.sources]
@@ -15,6 +18,8 @@ config = { workspace = true }
 db = { workspace = true }
 core = { workspace = true }
 observability = { workspace = true }
+application = { workspace = true }
+domain = { workspace = true }
 
 [dependency-groups]
 dev = [

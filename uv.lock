@@ -9,6 +9,7 @@ members = [
     "config",
     "core",
     "db",
+    "domain",
     "observability",
     "scheduler",
     "worker",
@@ -70,6 +71,7 @@ name = "api"
 version = "0.1.0"
 source = { editable = "services/api" }
 dependencies = [
+    { name = "application" },
     { name = "config" },
     { name = "dishka" },
     { name = "fastapi" },
@@ -89,6 +91,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "application", editable = "packages/application" },
     { name = "config", editable = "packages/config" },
     { name = "dishka", specifier = ">=1.10.1" },
     { name = "fastapi", specifier = ">=0.139.0" },
@@ -263,6 +266,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/97/da/b75b5fe665d16725e
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2c/08/dd3259a319ba45c48d975caf237c830c7873a203288cb4ab186cc5bef585/dishka-1.10.1-py3-none-any.whl", hash = "sha256:84f40c1115eb391ce3fb558fd7946c5bcaf6361c35b77b7a185b7697a5720ec7", size = 120062, upload-time = "2026-04-25T12:07:59.153Z" },
 ]
+
+[[package]]
+name = "domain"
+version = "0.1.0"
+source = { editable = "packages/domain" }
 
 [[package]]
 name = "fastapi"
