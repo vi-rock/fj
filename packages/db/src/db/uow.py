@@ -4,7 +4,7 @@ from typing import Protocol, Self
 from domain.users.repository import UserRepositoryProtocol
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.users.repository import UserRepository
+from db.repositories.user import UserRepository
 
 
 class RepositoriesProtocol(Protocol):

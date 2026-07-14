@@ -1,9 +1,9 @@
 from domain.users.entity import User
 from sqlalchemy import select
 
-from db.base.repository import SqlAlchemyRepository
-from db.users.mapper import UserMapper
-from db.users.model import UserORM
+from db.mappers.user import UserMapper
+from db.models.user import UserORM
+from db.repositories.base import SqlAlchemyRepository
 
 
 class UserRepository(SqlAlchemyRepository):

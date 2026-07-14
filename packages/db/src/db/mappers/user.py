@@ -1,6 +1,6 @@
 from domain.users.entity import User
 
-from db.users.model import UserORM
+from db.models.user import UserORM
 
 
 class UserMapper:
