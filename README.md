@@ -17,7 +17,7 @@ MVP is in progress. Interfaces and internal architecture may change.
 ## Structure
 
 The monorepo is split into packages and services:
-- `packages/` - shared libraries (config, core, db, observability);
+- `packages/` - shared libraries (application, config, core, db, domain, observability);
 - `services/` - application services (api, worker, scheduler).
 
 ## Quick Start
@@ -39,10 +39,11 @@ API:
 uv run --package api uvicorn api.main:app
 ```
 
-Optional checks:
+Code checks:
 ```bash
-uv run ruff check
-uv run pyright
+ruff format
+ruff check --fix
+ty check
 ```
 
 ## Roadmap (draft)
