@@ -36,4 +36,7 @@ async def check_user_exists(
         ),
     )
 
-    return UserExistsResponse.model_validate(result)
+    return UserExistsResponse(
+        nickname=result.nickname,
+        exists=result.exists,
+    )
