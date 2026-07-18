@@ -1,11 +1,12 @@
+from application.users.provider import UserApplicationProvider
 from db.provider import DBProvider
 from dishka import make_async_container
 from dishka.integrations.fastapi import FastapiProvider
 
-from api.provider import APIProvider
-
 container = make_async_container(
     DBProvider(),
-    APIProvider(),
+    # application providers
+    UserApplicationProvider(),
+    # framework provider
     FastapiProvider(),
 )

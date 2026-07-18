@@ -1,11 +1,11 @@
 from contextlib import asynccontextmanager
 
+from application.users.queries.check_user_exists import CheckUserExistsQuery, CheckUserExistsUseCase
 from dishka.integrations.fastapi import FromDishka, inject, setup_dishka
 from fastapi import FastAPI
 
 from api.container import container
-from api.users.schemas import UserRequest, UserResponse
-from api.users.service import UserService
+from api.users.schemas import UserExistsRequest, UserExistsResponse
 
 
 @asynccontextmanager
@@ -27,8 +27,13 @@ async def root():
 @app.post("/exists")
 @inject
 async def check_user_exists(
-    payload: UserRequest,
-    user_service: FromDishka[UserService],
-) -> UserResponse:
-    exists = await user_service.user_exists(payload.nickname)
-    return UserResponse(nickname=payload.nickname, exists=exists)
+    payload: UserExistsRequest,
+    use_case: FromDishka[CheckUserExistsUseCase],
+) -> UserExistsResponse:
+    result = await use_case.execute(
+        query=CheckUserExistsQuery(
+            nickname=payload.nickname,
+        ),
+    )
+
+    return UserExistsResponse.model_validate(result)
