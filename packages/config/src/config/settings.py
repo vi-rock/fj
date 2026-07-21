@@ -2,35 +2,46 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class AuthConfig(BaseModel):
-    private_key: str = Field(default="fj", validation_alias="PRIVATE_KEY")
-    public_key: str = Field(default="fj", validation_alias="PUBLIC_KEY")
-    access_token_expire_minutes: int = Field(
-        default=30, validation_alias="ACCESS_TOKEN_EXPIRE_MINUTES"
-    )
-    invite_enabled: bool = Field(default=True, validation_alias="INVITE_ENABLED")
-    registration_enabled: bool = Field(default=False, validation_alias="REGISTRATION_ENABLED")
-    oauth2_enabled: bool = Field(default=False, validation_alias="OAUTH2_ENABLED")
+class ServerConfig(BaseModel):
+    host: str = "127.0.0.1"
+    port: int = 8000
+
+
+class LoggingConfig(BaseModel):
+    level: str = "INFO"
+    is_json: bool = False
 
 
 class DatabaseConfig(BaseModel):
-    user: str = Field(default="fj", validation_alias="POSTGRES_USER")
-    password: str = Field(default="fj", validation_alias="POSTGRES_PASSWORD")
-    host: str = Field(default="localhost", validation_alias="POSTGRES_HOST")
-    port: int = Field(default=5432, validation_alias="POSTGRES_PORT")
-    database: str = Field(default="fj", validation_alias="POSTGRES_DB")
+    user: str = "fj"
+    password: str = "fj"
+    host: str = "localhost"
+    port: int = 5432
+    database: str = "fj"
+
+
+class AuthConfig(BaseModel):
+    private_key: str = "fj"
+    public_key: str = "fj"
+    access_token_expire_minutes: int = 30
+    invite_enabled: bool = True
+    registration_enabled: bool = False
+    oauth2_enabled: bool = False
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
-        env_file_encoding="utf-8",
+        env_nested_delimiter="__",
         extra="ignore",
     )
 
     environment: str = "local"
-    database: DatabaseConfig = DatabaseConfig()
-    auth: AuthConfig = AuthConfig()
+
+    server: ServerConfig = Field(default_factory=ServerConfig)
+    logging: LoggingConfig = Field(default_factory=LoggingConfig)
+    database: DatabaseConfig = Field(default_factory=DatabaseConfig)
+    auth: AuthConfig = Field(default_factory=AuthConfig)
 
 
 settings = Settings()

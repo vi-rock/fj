@@ -459,15 +459,11 @@ name = "observability"
 version = "0.1.0"
 source = { editable = "packages/observability" }
 dependencies = [
-    { name = "config" },
     { name = "structlog" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "config", editable = "packages/config" },
-    { name = "structlog", specifier = ">=26.1.0" },
-]
+requires-dist = [{ name = "structlog", specifier = ">=26.1.0" }]
 
 [[package]]
 name = "packaging"
