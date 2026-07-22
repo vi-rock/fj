@@ -13,6 +13,7 @@ def main():
         port=settings.server.port,
         log_config=None,
         reload=settings.environment == "local",
+        log_level=settings.logging.level,
     )
 
 
