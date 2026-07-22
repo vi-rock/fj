@@ -2,6 +2,11 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class CORSConfig(BaseModel):
+    allowed_origins: list[str] = []
+    allow_credentials: bool = True
+
+
 class ServerConfig(BaseModel):
     host: str = "127.0.0.1"
     port: int = 8000
@@ -38,6 +43,7 @@ class Settings(BaseSettings):
 
     environment: str = "local"
 
+    cors: CORSConfig = Field(default_factory=CORSConfig)
     server: ServerConfig = Field(default_factory=ServerConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
     database: DatabaseConfig = Field(default_factory=DatabaseConfig)
