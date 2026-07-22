@@ -1,4 +1,5 @@
-from logging import config as logging_config
+import logging
+import sys
 
 import structlog
 from structlog.types import Processor
@@ -8,53 +9,36 @@ def configure_logging(
     level: str,
     json_logs: bool,
 ) -> None:
-    shared_processors: list[Processor] = [
+    pre_processors: list[Processor] = [
         structlog.contextvars.merge_contextvars,
-        structlog.stdlib.add_log_level,
-        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt="iso", utc=True),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
     ]
-
-    renderer: Processor
 
     if json_logs:
         renderer = structlog.processors.JSONRenderer()
     else:
         renderer = structlog.dev.ConsoleRenderer(colors=True)
 
-    logging_config.dictConfig(
-        {
-            "version": 1,
-            "disable_existing_loggers": False,
-            "formatters": {
-                "default": {
-                    "()": structlog.stdlib.ProcessorFormatter,
-                    "foreign_pre_chain": shared_processors,
-                    "processors": [
-                        structlog.stdlib.ProcessorFormatter.remove_processors_meta,
-                        renderer,
-                    ],
-                },
-            },
-            "handlers": {
-                "default": {
-                    "class": "logging.StreamHandler",
-                    "formatter": "default",
-                },
-            },
-            "root": {
-                "handlers": ["default"],
-                "level": level,
-            },
-        }
-    )
-
     structlog.configure(
         processors=[
-            *shared_processors,
-            structlog.processors.StackInfoRenderer(),
-            structlog.processors.format_exc_info,
+            *pre_processors,
             structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
         ],
+        wrapper_class=structlog.make_filtering_bound_logger(level),
+        context_class=dict,
         logger_factory=structlog.stdlib.LoggerFactory(),
         cache_logger_on_first_use=True,
     )
+
+    handler = logging.StreamHandler(sys.stdout)
+    formatter = structlog.stdlib.ProcessorFormatter(
+        foreign_pre_chain=pre_processors,
+        processor=renderer,
+    )
+    handler.setFormatter(formatter)
+
+    logging.root.handlers.clear()
+    logging.root.addHandler(handler)
