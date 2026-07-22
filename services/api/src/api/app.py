@@ -3,9 +3,12 @@ from contextlib import asynccontextmanager
 from application.users.queries.check_user_exists import CheckUserExistsQuery, CheckUserExistsUseCase
 from dishka.integrations.fastapi import FromDishka, inject, setup_dishka
 from fastapi import FastAPI
+from observability.logging import get_logger
 
 from api.container import container
 from api.users.schemas import UserExistsRequest, UserExistsResponse
+
+logger = get_logger(__name__)
 
 
 @asynccontextmanager

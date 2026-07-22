@@ -36,7 +36,7 @@ uv sync --all-packages --group dev
 
 API:
 ```bash
-uv run --package api uvicorn api.app:app --reload
+uv run api
 ```
 
 Code checks:
